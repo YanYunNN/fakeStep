@@ -12,21 +12,36 @@ on:
     types: started
 
 jobs:
-  build:
+ #build:
+ #  runs-on: ubuntu-latest
+ #  steps:
+ #    - uses: actions/checkout@v2
+ #    - name: 初始化Python
+ #      uses: actions/setup-python@v2
+ #      with:
+ #        python-version: 3.7
+ #    - name: 开始
+ #      run: |
+ #        pip install requests
+ #        pmode='${{ secrets.PMODE }}'
+ #        pkey='${{ secrets.PKEY }}'
+ #        user='${{ secrets.USER }}'
+ #        pwd='${{ secrets.PWD }}'
+ #        step='${{ secrets.STEP }}'
+ #        
+ #        
+ #         https://sport-api.yyink.cn/api/mi?user=18720158315&password=caixin9749&step=22002
+ #        python3 main.py ${pmode} ${pkey} ${user} ${pwd} ${step}
+  verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: 初始化Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
-      - name: 开始
-        run: |
-          pip install requests
-          pmode='${{ secrets.PMODE }}'
-          pkey='${{ secrets.PKEY }}'
+     - name: random
+       run:  |
+          step='$(($RANDOM % 3534 + 19888))'
+          echo ${step}
+     - name: steps
+       run: |
           user='${{ secrets.USER }}'
           pwd='${{ secrets.PWD }}'
-          step='${{ secrets.STEP }}'
-
-          python3 main.py ${pmode} ${pkey} ${user} ${pwd} ${step}
+          step='$(($RANDOM % 3534 + 19888))'
+          curl 'https://sport-api.yyink.cn/api/mi?user=${user}&password=${pwd}&step=${step}'
