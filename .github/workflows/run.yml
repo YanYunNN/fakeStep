@@ -16,18 +16,16 @@ jobs:
     steps:
       - name: generate random number
         run: |
-          if [[ "$(date +\%H)" -ge 18 ]]; then
-            lower_limit=23607
-            upper_limit=27141
-          else
-            lower_limit=19888
-            upper_limit=23422
-          fi
-          echo "CurTime: ${date}"
-          step="$(( RANDOM % (upper_limit - lower_limit + 1) + lower_limit ))"
-          echo "Random number: ${step}"
           user="${{ secrets.USER }}"
           pwd="${{ secrets.PWD }}"
+          current_time=$(date "+%Y-%m-%d %H:%M:%S")
+          echo "Current Time: ${current_time}"
+          if [ $(date +%H%M) -ge 0800 ]; then
+            step="$(( $RANDOM % 3534 + 20342 ))"
+          else
+            step="$(( $RANDOM % 1534 + 19888 ))"
+          fi
+          echo "Step: ${step}"
           curl "https://sport-api.yyink.cn/api/mi?user=${user}&password=${pwd}&step=${step}"
 
  #build:
