@@ -23,6 +23,7 @@ jobs:
             lower_limit=19888
             upper_limit=23422
           fi
+          echo "CurTime: ${date}"
           step="$(( RANDOM % (upper_limit - lower_limit + 1) + lower_limit ))"
           echo "Random number: ${step}"
           user="${{ secrets.USER }}"
