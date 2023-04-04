@@ -4,7 +4,8 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches-ignore:
+      - '*'
   schedule:
     - cron: 5 16,23 * * *
   watch:
@@ -25,12 +26,10 @@ jobs:
             echo "Generating random number for the second time"
             lower_limit=23607
             upper_limit=27141
-            step=$(( $RANDOM % (35000 - 30000 + 1) + 30000 ))
           else
             echo "Generating random number for the first time"
             lower_limit=19888
             upper_limit=23422
-            step=$(( $RANDOM % (20000 - 15000 + 1) + 15000 ))
           fi
           step="$(( RANDOM % (upper_limit - lower_limit + 1) + lower_limit ))"
           echo "Random number: ${step}"
