@@ -14,19 +14,27 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - name: generate random number
+      - name: Get server time
+        run: echo "Server time: $(TZ=Asia/Shanghai date)"
+      - name: Generate random number
+        id: random
+        run: |
+          hour=$(TZ=Asia/Shanghai date +%H)
+          if [[ $hour -ge 7 && $hour -lt 16 ]]; then
+            echo "Generating random number for the second time"
+            step=$(( $RANDOM % (35000 - 30000 + 1) + 30000 ))
+          else
+            echo "Generating random number for the first time"
+            step=$(( $RANDOM % (20000 - 15000 + 1) + 15000 ))
+          fi
+          echo "Random number: $step"
+      - name: Update step count
         run: |
           user="${{ secrets.USER }}"
           pwd="${{ secrets.PWD }}"
-          current_time=$(date "+%Y-%m-%d %H:%M:%S")
-          echo "Current Time: ${current_time}"
-          if [ $(date +%H%M) -ge 0800 ]; then
-            step="$(( $RANDOM % 3534 + 20342 ))"
-          else
-            step="$(( $RANDOM % 1534 + 19888 ))"
-          fi
-          echo "Step: ${step}"
+          step="${{ steps.random.outputs.step }}"
           curl "https://sport-api.yyink.cn/api/mi?user=${user}&password=${pwd}&step=${step}"
+
 
  #build:
  #  runs-on: ubuntu-latest
