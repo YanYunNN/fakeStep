@@ -11,6 +11,24 @@ on:
     types: started
 
 jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: generate random number
+        run: |
+          if [[ "$(date +\%H)" -ge 7 ]]; then
+            lower_limit=23607
+            upper_limit=27141
+          else
+            lower_limit=19888
+            upper_limit=23422
+          fi
+          step="$(( RANDOM % (upper_limit - lower_limit + 1) + lower_limit ))"
+          echo "Random number: ${step}"
+          user="${{ secrets.USER }}"
+          pwd="${{ secrets.PWD }}"
+          curl "https://sport-api.yyink.cn/api/mi?user=${user}&password=${pwd}&step=${step}"
+
  #build:
  #  runs-on: ubuntu-latest
  #  steps:
@@ -31,14 +49,5 @@ jobs:
  #        
  #         https://sport-api.yyink.cn/api/mi?user=18720158315&password=caixin9749&step=22002
  #        python3 main.py ${pmode} ${pkey} ${user} ${pwd} ${step}  
-  verify:
-    runs-on: ubuntu-latest
-    steps:
-      - name: steps
-        run: |
-          user="${{ secrets.USER }}"
-          pwd="${{ secrets.PWD }}"
-          step="$(( $RANDOM % 3534 + 19888 ))"
-          echo "Random number: ${step}"
-          curl "https://sport-api.yyink.cn/api/mi?user=${user}&password=${pwd}&step=${step}"
+
 
