@@ -15,9 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get server time
+        id: time
         run: echo "Server time： $(TZ=Asia/Shanghai date)"
-      - name: Generate random number
-        id: Random steps
+      - name: Random steps
+        id: api
         run: |
           hour=$(TZ=Asia/Shanghai date +%H)
           if [[ $hour -ge 7 && $hour -lt 16 ]]; then
