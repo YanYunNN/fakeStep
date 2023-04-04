@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get server time
-        run: echo "Server time: $(TZ=Asia/Shanghai date)"
+        run: echo "Server time： $(TZ=Asia/Shanghai date)"
       - name: Generate random number
         id: random
         run: |
