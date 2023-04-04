@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: generate random number
         run: |
-          if [[ "$(date +\%H)" -ge 7 ]]; then
+          if [[ "$(date +\%H)" -ge 18 ]]; then
             lower_limit=23607
             upper_limit=27141
           else
