@@ -43,5 +43,4 @@ jobs:
         run: |
           user="${{ secrets.USER }}"
           pwd="${{ secrets.PWD }}"
-          step="$(( $RANDOM % 3534 + 19888 ))"
           curl "https://sport-api.yyink.cn/api/mi?user=${user}&password=${pwd}&step=${step}"
