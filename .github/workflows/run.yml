@@ -35,13 +35,13 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-     - name: random
-       run:  |
+      - name: random
+        run: |
           step="$(( $RANDOM % 3534 + 19888 ))"
           echo "$step"
-     - name: steps
-       run: |
-          user='${{ secrets.USER }}'
-          pwd='${{ secrets.PWD }}'
-          step='$(($RANDOM % 3534 + 19888))'
+      - name: steps
+        run: |
+          user="${{ secrets.USER }}"
+          pwd="${{ secrets.PWD }}"
+          step="$(( $RANDOM % 3534 + 19888 ))"
           curl "https://sport-api.yyink.cn/api/mi?user=${user}&password=${pwd}&step=${step}"
