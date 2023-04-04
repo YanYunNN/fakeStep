@@ -31,7 +31,7 @@ jobs:
  #        
  #        
  #         https://sport-api.yyink.cn/api/mi?user=18720158315&password=caixin9749&step=22002
- #        python3 main.py ${pmode} ${pkey} ${user} ${pwd} ${step}
+ #        python3 main.py ${pmode} ${pkey} ${user} ${pwd} ${step} 
   verify:
     runs-on: ubuntu-latest
     steps:
