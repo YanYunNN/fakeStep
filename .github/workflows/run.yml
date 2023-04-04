@@ -17,22 +17,24 @@ jobs:
       - name: Get server time
         run: echo "Server time： $(TZ=Asia/Shanghai date)"
       - name: Generate random number
-        id: random
+        id: Random steps
         run: |
           hour=$(TZ=Asia/Shanghai date +%H)
           if [[ $hour -ge 7 && $hour -lt 16 ]]; then
             echo "Generating random number for the second time"
+            lower_limit=23607
+            upper_limit=27141
             step=$(( $RANDOM % (35000 - 30000 + 1) + 30000 ))
           else
             echo "Generating random number for the first time"
+            lower_limit=19888
+            upper_limit=23422
             step=$(( $RANDOM % (20000 - 15000 + 1) + 15000 ))
           fi
-          echo "Random number: $step"
-      - name: Update step count
-        run: |
+          step="$(( RANDOM % (upper_limit - lower_limit + 1) + lower_limit ))"
+          echo "Random number: ${step}"
           user="${{ secrets.USER }}"
           pwd="${{ secrets.PWD }}"
-          step="${{ steps.random.outputs.step }}"
           curl "https://sport-api.yyink.cn/api/mi?user=${user}&password=${pwd}&step=${step}"
 
 
